@@ -10,8 +10,9 @@ import (
 	"time"
 )
 
+const url = "https://httpbin.org/get"
+
 func MakeGetRequest() {
-	const url = "https://manolorodriguez.com"
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln(err)
@@ -31,7 +32,6 @@ func MakeGetRequestCustom() {
 		Timeout: 5 * time.Second,
 	}
 
-	const url = "https://manolorodriguez.com"
 	resp, err := client.Get(url)
 	if err != nil {
 		log.Fatalln(err)
