@@ -18,7 +18,9 @@ func MakePostRequest() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	const url = "https://webhook.site/528d2912-5a9d-4ebe-868f-e707f1f8c90f"
+
+	// nota: esta url puede dejar de funcionar, acceder a https://webhook.site/ y obtener una nueva si da error
+	const url = "https://webhook.site/4f49ff80-7525-43a4-9028-144dcd0de68e"
 	const contentType = "application/json"
 	mensajePost := bytes.NewBuffer(bytesMensaje)
 	resp, err := http.Post(url, contentType, mensajePost)
