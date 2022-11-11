@@ -10,6 +10,8 @@ import (
 
 var saludazo = "Oh que paso mi niño"
 
+var saludosCustom map[string]string
+
 func saludarGET(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var saludo string
@@ -23,14 +25,21 @@ func saludarGET(w http.ResponseWriter, r *http.Request) {
 	default:
 		saludo = "👋"
 	}
+
+	if saludoCustom, ok := saludosCustom[params["idioma"]]; ok != false {
+		saludo = saludoCustom
+	}
 	fmt.Fprintf(w, "%s\n", saludo)
 }
 
 func saludarPOST(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
+	if saludosCustom == nil {
+		saludosCustom = make(map[string]string)
+	}
 
 	defer r.Body.Close()
 	var result struct {
+		Idioma string `json:"idioma"`
 		Saludo string `json:"saludo"`
 	}
 	json.NewDecoder(r.Body).Decode(&result)
@@ -38,14 +47,15 @@ func saludarPOST(w http.ResponseWriter, r *http.Request) {
 	if result.Saludo != saludazo {
 		saludazo = result.Saludo
 	}
-	fmt.Fprintf(w, "Creando nueva string para el idioma %s: %s\n", params["idioma"], result.Saludo)
+	fmt.Fprintf(w, "Creando nueva string para el idioma %s: %s\n", result.Idioma, result.Saludo)
+	saludosCustom[result.Idioma] = result.Saludo
 }
 
 func main() {
 	r := mux.NewRouter()
 
+	r.HandleFunc("/saludos/", saludarPOST).Methods("POST")
 	r.HandleFunc("/saludos/{idioma:[a-zA-Z][a-zA-Z]}", saludarGET).Methods("GET")
-	r.HandleFunc("/saludos/{idioma:[a-zA-Z][a-zA-Z]}", saludarPOST).Methods("POST")
 
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(":8087", r)
 }

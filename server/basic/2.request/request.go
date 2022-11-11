@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -17,5 +18,8 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handleRequest)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8081", nil)
+	if err != nil {
+		log.Fatalln("Error running web server:", err)
+	}
 }

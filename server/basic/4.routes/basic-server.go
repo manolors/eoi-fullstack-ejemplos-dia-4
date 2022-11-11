@@ -10,17 +10,16 @@ func saludoIngles(w http.ResponseWriter, r *http.Request) {
 }
 
 func saludoCanario(w http.ResponseWriter, r *http.Request) {
-	r.Url().Split("/")
 	fmt.Fprintf(w, "Oh que pasó mi niño\n")
 }
 
 func saludoEspañol(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Que pasa tronco\n")
+	fmt.Fprintf(w, "Que pasa tio\n")
 }
 
 func main() {
 	http.HandleFunc("/ingles", saludoIngles)
 	http.HandleFunc("/español", saludoEspañol)
 	http.HandleFunc("/canario/", saludoCanario)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8090", nil)
 }
