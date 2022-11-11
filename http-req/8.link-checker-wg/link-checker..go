@@ -19,7 +19,7 @@ func checkLink(link string, wg *sync.WaitGroup) {
 func main() {
 	links := []string{
 		"https://emezeta.com",
-		"https://manolorodriguez.com",
+		"https://lolorodriguez.es",
 		"https://twitter.com",
 		"https://estonufunca.com",
 		"https://httpbin.org/status/500",
