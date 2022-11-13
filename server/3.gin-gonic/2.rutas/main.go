@@ -5,10 +5,8 @@ import (
 )
 
 func devuelveNombre(c *gin.Context) {
-	//	user := c.Params.ByName("name")
-	// c.JSON(http.StatusOK, gin.H{"nombre": user})
-	//	c.HTML(200, "nombre", "<html><h1>hola</h1></html>")
-	c.String(200, "%s", "hola")
+	user := c.Params.ByName("name")
+	c.String(200, "%s", "hola "+user)
 }
 
 func main() {
